@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <title>DTI tract viewer</title>
+    <meta name="description" content="Fractional anisotropy and mean diffusivity maps from diffusion MRI, with the anterior thalamic radiation and superior longitudinal fasciculus outlined, in three linked slice views." />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <a class="skip" href="#stage">Skip to the images</a>
+    <div class="app is-starting" id="app">
+      <!-- left: what is drawn, and how -->
+      <aside class="panel panel--controls" id="controls" aria-label="Display controls">
+        <header class="brand">
+          <h1>DTI tract viewer</h1>
+          <p>White matter integrity in the tracts linked to bladder control.</p>
+        </header>
+
+        <div class="field">
+          <label class="field__name" for="scan">Scan <output id="scan-count" for="scan"></output></label>
+          <div class="switcher">
+            <select id="scan"></select>
+            <div class="stepper">
+              <button type="button" id="prev-scan" aria-label="Previous scan">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" /></svg>
+              </button>
+              <button type="button" id="next-scan" aria-label="Next scan">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" /></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <section class="group" aria-labelledby="map-title">
+          <h2 id="map-title">Map</h2>
+          <div class="seg" role="radiogroup" aria-labelledby="map-title">
+            <label><input type="radio" name="map" value="fa" checked /><span>FA</span></label>
+            <label><input type="radio" name="map" value="md" /><span>MD</span></label>
+          </div>
+          <p class="hint" id="map-hint"></p>
+        </section>
+
+        <section class="group" aria-labelledby="overlays-title">
+          <h2 id="overlays-title">Overlays</h2>
+          <div id="tract-rows"></div>
+          <label class="check">
+            <input type="checkbox" id="show-cross" checked />
+            <span class="swatch swatch--cross" aria-hidden="true"></span>
+            <span class="check__text">Crosshair</span>
+          </label>
+        </section>
+
+        <section class="group" aria-labelledby="tract-style-title">
+          <h2 id="tract-style-title">Tract drawing</h2>
+          <div class="seg" role="radiogroup" aria-labelledby="tract-style-title">
+            <label><input type="radio" name="style" value="outline" checked /><span>Outline</span></label>
+            <label><input type="radio" name="style" value="fill" /><span>Fill</span></label>
+          </div>
+          <label class="field" for="opacity">
+            <span class="field__name">Fill opacity <output id="opacity-out" for="opacity">50%</output></span>
+            <input type="range" id="opacity" min="0" max="1" step="0.05" value="0.5" />
+          </label>
+        </section>
+
+        <section class="group" aria-labelledby="image-title">
+          <h2 id="image-title">Image</h2>
+          <label class="field" for="level">
+            <span class="field__name">Brightness <output id="level-out" for="level">50</output></span>
+            <input type="range" id="level" min="0" max="1" step="0.01" value="0.5" />
+          </label>
+          <label class="field" for="width">
+            <span class="field__name">Contrast <output id="width-out" for="width">50</output></span>
+            <input type="range" id="width" min="0" max="1" step="0.01" value="0.5" />
+          </label>
+          <button type="button" class="link" id="reset-image">Reset image</button>
+        </section>
+
+        <footer class="foot">
+          <details>
+            <summary>Mouse and keyboard</summary>
+            <ul>
+              <li>Click or drag in a view to move all three.</li>
+              <li>Scroll, or <kbd>↑</kbd> <kbd>↓</kbd>, steps through slices. <kbd>Page Up</kbd> and <kbd>Page Down</kbd> step ten.</li>
+              <li><kbd>Shift</kbd> and an arrow key moves the crosshair within the slice.</li>
+              <li><kbd>M</kbd> switches between FA and MD.</li>
+              <li><kbd>T</kbd> shows or hides the tracts. <kbd>O</kbd> switches outline and fill.</li>
+              <li><kbd>[</kbd> and <kbd>]</kbd> go to the previous and next tract.</li>
+              <li><kbd>,</kbd> and <kbd>.</kbd> open the previous and next scan.</li>
+            </ul>
+          </details>
+          <p id="attribution"></p>
+          <p>Research use only. Not a medical device, and not for diagnosis.</p>
+        </footer>
+      </aside>
+
+      <!-- centre: the images -->
+      <main class="stage" id="stage" tabindex="-1">
+        <canvas id="gl" aria-hidden="true"></canvas>
+
+        <button type="button" class="edge edge--left" id="toggle-controls" aria-controls="controls" aria-expanded="true">
+          <span class="edge__chev" aria-hidden="true"></span>
+          <span class="sr-only">Display controls</span>
+        </button>
+        <button type="button" class="edge edge--right" id="toggle-readout" aria-controls="readout-panel" aria-expanded="true">
+          <span class="edge__chev" aria-hidden="true"></span>
+          <span class="sr-only">Scan measurements</span>
+        </button>
+
+        <div class="pill pill--mode seg" role="radiogroup" aria-label="What to show">
+          <label><input type="radio" name="mode" value="scans" checked /><span>Scans</span></label>
+          <label><input type="radio" name="mode" value="results" /><span>Group results</span></label>
+        </div>
+
+        <div class="pill pill--views seg" role="radiogroup" aria-label="Which views to show">
+          <label><input type="radio" name="layout" value="all" checked /><span>Three views</span></label>
+          <label><input type="radio" name="layout" value="axial" /><span>Axial</span></label>
+          <label><input type="radio" name="layout" value="coronal" /><span>Coronal</span></label>
+          <label><input type="radio" name="layout" value="sagittal" /><span>Sagittal</span></label>
+        </div>
+
+        <!-- which map is on, where it can be read with both panels away -->
+        <p class="pill pill--map" id="map-badge" aria-hidden="true"></p>
+
+        <div class="panes" id="panes" data-layout="all">
+          <section class="pane" data-view="axial" tabindex="0" aria-label="Axial view">
+            <header class="pane__tag"><h2>Axial</h2><span class="pane__slice"></span></header>
+            <div class="pane__marks" aria-hidden="true">
+              <span class="mark mark--left"></span><span class="mark mark--right"></span>
+              <span class="mark mark--top"></span><span class="mark mark--bottom"></span>
+              <span class="cross cross--h"></span><span class="cross cross--v"></span>
+            </div>
+          </section>
+          <section class="pane" data-view="coronal" tabindex="0" aria-label="Coronal view">
+            <header class="pane__tag"><h2>Coronal</h2><span class="pane__slice"></span></header>
+            <div class="pane__marks" aria-hidden="true">
+              <span class="mark mark--left"></span><span class="mark mark--right"></span>
+              <span class="mark mark--top"></span><span class="mark mark--bottom"></span>
+              <span class="cross cross--h"></span><span class="cross cross--v"></span>
+            </div>
+          </section>
+          <section class="pane" data-view="sagittal" tabindex="0" aria-label="Sagittal view">
+            <header class="pane__tag"><h2>Sagittal</h2><span class="pane__slice"></span></header>
+            <div class="pane__marks" aria-hidden="true">
+              <span class="mark mark--left"></span><span class="mark mark--right"></span>
+              <span class="mark mark--top"></span><span class="mark mark--bottom"></span>
+              <span class="cross cross--h"></span><span class="cross cross--v"></span>
+            </div>
+          </section>
+        </div>
+
+        <!-- the slice scrubber. its track is the tract profile: how much of each tract a slice holds -->
+        <div class="pill pill--scrub" id="scrub">
+          <button type="button" id="slice-back" aria-label="Previous slice">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" /></svg>
+          </button>
+          <span class="scrub__end" id="scrub-low" aria-hidden="true"></span>
+          <div class="scrub__track" id="profile" role="slider" tabindex="0" aria-orientation="horizontal"
+               aria-label="Slice, drawn over the amount of each tract in each slice">
+            <canvas aria-hidden="true"></canvas>
+          </div>
+          <span class="scrub__end" id="scrub-high" aria-hidden="true"></span>
+          <button type="button" id="slice-forward" aria-label="Next slice">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" /></svg>
+          </button>
+          <span class="scrub__where" id="scrub-where"></span>
+        </div>
+
+        <!-- every scan's measurements and the results for each question, as one page -->
+        <section class="report" id="report" aria-labelledby="report-title" hidden>
+          <div class="report__page">
+            <header class="report__head">
+              <div>
+                <h2 id="report-title">Group results</h2>
+                <p id="report-meta"></p>
+              </div>
+              <div class="report__actions">
+                <button type="button" class="btn" id="copy-scans">Copy the scan table</button>
+                <button type="button" class="btn" id="copy-summary">Copy the full summary</button>
+                <span class="copied" id="report-copied" role="status" aria-live="polite"></span>
+              </div>
+            </header>
+            <div id="report-body"></div>
+          </div>
+        </section>
+
+        <div class="notice" id="notice" role="status" hidden></div>
+      </main>
+
+      <!-- right: what was measured -->
+      <aside class="panel panel--readout" id="readout-panel" aria-label="Scan measurements">
+        <section class="hero" aria-labelledby="hero-title">
+          <h2 id="hero-title">Tract means</h2>
+          <ul class="tracts" id="tract-cards"></ul>
+          <p class="hero__note" id="hero-note"></p>
+          <p class="hero__copy">
+            <button type="button" class="link" id="copy-scan">Copy this scan's measurements</button>
+            <span class="copied" id="scan-copied" role="status" aria-live="polite"></span>
+          </p>
+        </section>
+
+        <section class="group" aria-labelledby="parts-title" id="parts-group" hidden>
+          <h2 id="parts-title">Each side, and the temporal SLF</h2>
+          <table class="parts" id="parts"></table>
+          <p class="hint">Reported for each scan. Not used in the tests.</p>
+        </section>
+
+        <section class="group" aria-labelledby="facts-title">
+          <h2 id="facts-title">This scan</h2>
+          <dl class="facts" id="facts"></dl>
+        </section>
+
+        <section class="group" aria-labelledby="here-title">
+          <h2 id="here-title">At the crosshair</h2>
+          <dl class="facts facts--here" id="here"></dl>
+        </section>
+
+        <section class="group group--places" aria-labelledby="places-title">
+          <div class="group__row">
+            <h2 id="places-title">Go to a tract</h2>
+            <div class="stepper">
+              <button type="button" id="prev-place" aria-label="Previous tract">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" /></svg>
+              </button>
+              <button type="button" id="next-place" aria-label="Next tract">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" /></svg>
+              </button>
+            </div>
+          </div>
+          <ol class="places" id="places"></ol>
+        </section>
+      </aside>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

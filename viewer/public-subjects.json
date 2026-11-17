@@ -1,0 +1,9 @@
+{
+  "note": "scans that may go on the public site. npm run deploy ships whatever is in public/data, so a scan only goes on this list once it is cleared for public release. patient scans never do.",
+  "subjects": {
+    "sub-10159": "OpenNeuro ds000030 (UCLA CNP LA5c), CC0",
+    "sub-10228": "OpenNeuro ds000030 (UCLA CNP LA5c), CC0",
+    "sub-10339": "OpenNeuro ds000030 (UCLA CNP LA5c), CC0",
+    "sub-010002": "OpenNeuro ds000221 (MPI-Leipzig Mind-Brain-Body), CC0"
+  }
+}

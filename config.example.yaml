@@ -1,0 +1,72 @@
+# Copy this to config.yaml (which git ignores) and edit the paths.
+# Every value below is the default, so a config only needs the lines it changes.
+# Relative paths are relative to this file.
+
+paths:
+  dwi_dir: data/dwi               # diffusion scans: <id>/dwi.nii.gz with dwi.bval and dwi.bvec beside it
+  clinical_csv: data/clinical.csv # see templates/clinical_template.csv
+  fc_csv: data/fc.csv             # see templates/fc_template.csv
+  output_dir: outputs             # outputs/local stays on this machine, outputs/shareable can be sent
+  cache_dir: cache                # downloaded atlas and template
+
+run:
+  workers: 1                      # scans processed at the same time. each needs about 3 GB of memory
+
+acquisition:                      # what a scan is expected to be. one that differs is still processed, and flagged
+  b_value: 1000.0                 # s/mm2
+  directions: 64                  # diffusion-weighted volumes
+  b0_volumes: 5
+  b_tolerance: 100.0              # volumes within this of b_value form the shell the tensor is fitted to
+  b0_threshold: 50.0              # volumes at or below this are b0
+
+preprocessing:
+  motion_correction: true         # register every volume to the b0 and rotate the b-vectors to match
+  transform: affine               # affine (motion and linear eddy distortion) | rigid (motion only)
+  fit_method: WLS                 # WLS | OLS | NLLS
+
+registration:
+  template: JHU-ICBM-FA-1mm       # the FA template in the space of the JHU tract atlas
+  speed: fast                     # fast | accurate
+
+tracts:
+  atlas: jhu_tracts_maxprob_thr25_1mm
+  # tested measures. each name is the pool of the atlas labels listed under it
+  primary:
+    ATR:
+      - Anterior thalamic radiation L
+      - Anterior thalamic radiation R
+    SLF:
+      - Superior longitudinal fasciculus L
+      - Superior longitudinal fasciculus R
+  # written to the per-subject table, not tested
+  secondary:
+    ATR_L: [Anterior thalamic radiation L]
+    ATR_R: [Anterior thalamic radiation R]
+    SLF_L: [Superior longitudinal fasciculus L]
+    SLF_R: [Superior longitudinal fasciculus R]
+    SLF_temporal:
+      - Superior longitudinal fasciculus (temporal part) L
+      - Superior longitudinal fasciculus (temporal part) R
+  min_fa: 0.2                     # only voxels with at least this FA count towards a tract's mean. 0 keeps all
+  min_voxels: 10                  # a tract left with fewer voxels than this gets no value
+
+stats:
+  alpha: 0.05
+  fdr_method: bh                  # Benjamini-Hochberg, across FC outcomes
+  bootstrap_resamples: 2000       # for the confidence intervals
+  seed: 0
+  min_n: 6                        # a test with fewer complete subjects is skipped and reported as skipped
+  fc_require_both_states: true    # FC tests only use subjects who have both the full and the empty value
+
+analyses:
+  q1_integrity_fc: true           # FA and MD in the tracts vs functional connectivity
+  q2_ms_vs_ioab: true             # FA and MD in women with MS vs women with iOAB, adjusted for age
+  q3_detrusor_overactivity: true  # FA and MD by detrusor overactivity on urodynamics
+  q4_symptom_severity: true       # FA and MD vs symptom severity
+  q5_treatment_response: false    # baseline FA and MD by treatment response. off until the data allow it
+
+treatment_response:
+  min_nbss_improvement: null      # required when q5 is on: points of NBSS total improvement that count as a response
+
+report:
+  min_cell_n: 3                   # group statistics are withheld for groups smaller than this

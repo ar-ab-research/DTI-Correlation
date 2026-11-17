@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dtic"
+version = "0.1.0"
+description = "White-matter integrity from diffusion MRI (FA and MD in the ATR and SLF), and its associations with functional connectivity, urodynamic and symptom data."
+requires-python = ">=3.11,<3.14"
+license = "MIT"
+dependencies = [
+    "numpy>=1.26",
+    "scipy>=1.11",
+    "pandas>=2.1",
+    "nibabel>=5.2",
+    "pyyaml>=6",
+    "statsmodels>=0.14",
+    "dipy>=1.10",
+    "antspyx>=0.6",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[project.scripts]
+dtic = "dtic.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["slow: runs real image processing, up to a minute"]

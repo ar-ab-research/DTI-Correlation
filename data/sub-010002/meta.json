@@ -1,0 +1,120 @@
+{
+ "id": "sub-010002",
+ "dims": [
+  168,
+  181,
+  156
+ ],
+ "voxel_mm": 1.0,
+ "orientation": "RAS",
+ "layers": {
+  "fa": "fa.u8.gz",
+  "md": "md.u8.gz",
+  "tracts": "tracts.u8.gz"
+ },
+ "white": {
+  "fa": 1.0,
+  "md": 3.0
+ },
+ "tracts": {
+  "1": "ATR",
+  "2": "SLF"
+ },
+ "places": [
+  {
+   "tract": "ATR",
+   "side": "left",
+   "voxel": [
+    67,
+    95,
+    88
+   ]
+  },
+  {
+   "tract": "ATR",
+   "side": "right",
+   "voxel": [
+    96,
+    100,
+    87
+   ]
+  },
+  {
+   "tract": "SLF",
+   "side": "left",
+   "voxel": [
+    41,
+    69,
+    101
+   ]
+  },
+  {
+   "tract": "SLF",
+   "side": "right",
+   "voxel": [
+    123,
+    76,
+    102
+   ]
+  }
+ ],
+ "min_fa": 0.2,
+ "stats": {
+  "tracts": {
+   "ATR": {
+    "fa": 0.3822,
+    "md": 0.8414,
+    "voxels": 1260.0,
+    "kept_pct": 64.4172
+   },
+   "SLF": {
+    "fa": 0.3805,
+    "md": 0.8091,
+    "voxels": 2344.0,
+    "kept_pct": 82.1879
+   }
+  },
+  "parts": {
+   "ATR_L": {
+    "fa": 0.4004,
+    "md": 0.8417,
+    "voxels": 589.0,
+    "kept_pct": 59.3152
+   },
+   "ATR_R": {
+    "fa": 0.3662,
+    "md": 0.8411,
+    "voxels": 671.0,
+    "kept_pct": 69.6781
+   },
+   "SLF_L": {
+    "fa": 0.3935,
+    "md": 0.8049,
+    "voxels": 1275.0,
+    "kept_pct": 81.5739
+   },
+   "SLF_R": {
+    "fa": 0.365,
+    "md": 0.814,
+    "voxels": 1069.0,
+    "kept_pct": 82.9325
+   },
+   "SLF_temporal": {
+    "fa": 0.555,
+    "md": 0.7629,
+    "voxels": 43.0,
+    "kept_pct": 95.5556
+   }
+  },
+  "n_directions": 60.0,
+  "b_value": 1000.0,
+  "n_b0": 7.0,
+  "motion_mean_mm": 0.6071,
+  "motion_max_mm": 1.4668,
+  "reg_similarity": 0.7393,
+  "voxel_mm": "1.72 x 1.72 x 1.7",
+  "acq_as_expected": false,
+  "reg_ok": true
+ },
+ "attribution": "Scan from OpenNeuro ds000221 (MPI-Leipzig Mind-Brain-Body), CC0."
+}

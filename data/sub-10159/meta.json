@@ -1,0 +1,120 @@
+{
+ "id": "sub-10159",
+ "dims": [
+  145,
+  187,
+  95
+ ],
+ "voxel_mm": 1.0,
+ "orientation": "RAS",
+ "layers": {
+  "fa": "fa.u8.gz",
+  "md": "md.u8.gz",
+  "tracts": "tracts.u8.gz"
+ },
+ "white": {
+  "fa": 1.0,
+  "md": 3.0
+ },
+ "tracts": {
+  "1": "ATR",
+  "2": "SLF"
+ },
+ "places": [
+  {
+   "tract": "ATR",
+   "side": "left",
+   "voxel": [
+    53,
+    107,
+    25
+   ]
+  },
+  {
+   "tract": "ATR",
+   "side": "right",
+   "voxel": [
+    81,
+    114,
+    26
+   ]
+  },
+  {
+   "tract": "SLF",
+   "side": "left",
+   "voxel": [
+    31,
+    74,
+    36
+   ]
+  },
+  {
+   "tract": "SLF",
+   "side": "right",
+   "voxel": [
+    109,
+    86,
+    39
+   ]
+  }
+ ],
+ "min_fa": 0.2,
+ "stats": {
+  "tracts": {
+   "ATR": {
+    "fa": 0.4019,
+    "md": 0.7123,
+    "voxels": 1329.0,
+    "kept_pct": 93.6575
+   },
+   "SLF": {
+    "fa": 0.4393,
+    "md": 0.7309,
+    "voxels": 2023.0,
+    "kept_pct": 85.0
+   }
+  },
+  "parts": {
+   "ATR_L": {
+    "fa": 0.4128,
+    "md": 0.6977,
+    "voxels": 765.0,
+    "kept_pct": 95.9849
+   },
+   "ATR_R": {
+    "fa": 0.3871,
+    "md": 0.7322,
+    "voxels": 564.0,
+    "kept_pct": 90.6752
+   },
+   "SLF_L": {
+    "fa": 0.4493,
+    "md": 0.7286,
+    "voxels": 1191.0,
+    "kept_pct": 82.9387
+   },
+   "SLF_R": {
+    "fa": 0.4251,
+    "md": 0.7341,
+    "voxels": 832.0,
+    "kept_pct": 88.1356
+   },
+   "SLF_temporal": {
+    "fa": 0.5081,
+    "md": 0.7586,
+    "voxels": 30.0,
+    "kept_pct": 100.0
+   }
+  },
+  "n_directions": 64.0,
+  "b_value": 1000.0,
+  "n_b0": 1.0,
+  "motion_mean_mm": 1.6983,
+  "motion_max_mm": 3.9749,
+  "reg_similarity": 0.7223,
+  "voxel_mm": "1.98 x 1.98 x 2",
+  "acq_as_expected": false,
+  "reg_ok": true
+ },
+ "attribution": "Scan from OpenNeuro ds000030 (UCLA Consortium for Neuropsychiatric Phenomics LA5c Study), CC0."
+}

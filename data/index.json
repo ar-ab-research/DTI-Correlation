@@ -1,0 +1,242 @@
+{
+ "subjects": [
+  "sub-010002",
+  "sub-10159",
+  "sub-10228",
+  "sub-10339"
+ ],
+ "measurements": [
+  {
+   "id": "sub-010002",
+   "tracts": {
+    "ATR": {
+     "fa": 0.3822,
+     "md": 0.8414,
+     "voxels": 1260.0,
+     "kept_pct": 64.4172
+    },
+    "SLF": {
+     "fa": 0.3805,
+     "md": 0.8091,
+     "voxels": 2344.0,
+     "kept_pct": 82.1879
+    }
+   },
+   "parts": {
+    "ATR_L": {
+     "fa": 0.4004,
+     "md": 0.8417,
+     "voxels": 589.0,
+     "kept_pct": 59.3152
+    },
+    "ATR_R": {
+     "fa": 0.3662,
+     "md": 0.8411,
+     "voxels": 671.0,
+     "kept_pct": 69.6781
+    },
+    "SLF_L": {
+     "fa": 0.3935,
+     "md": 0.8049,
+     "voxels": 1275.0,
+     "kept_pct": 81.5739
+    },
+    "SLF_R": {
+     "fa": 0.365,
+     "md": 0.814,
+     "voxels": 1069.0,
+     "kept_pct": 82.9325
+    },
+    "SLF_temporal": {
+     "fa": 0.555,
+     "md": 0.7629,
+     "voxels": 43.0,
+     "kept_pct": 95.5556
+    }
+   },
+   "n_directions": 60.0,
+   "b_value": 1000.0,
+   "n_b0": 7.0,
+   "motion_mean_mm": 0.6071,
+   "motion_max_mm": 1.4668,
+   "reg_similarity": 0.7393,
+   "voxel_mm": "1.72 x 1.72 x 1.7",
+   "acq_as_expected": false,
+   "reg_ok": true
+  },
+  {
+   "id": "sub-10159",
+   "tracts": {
+    "ATR": {
+     "fa": 0.4019,
+     "md": 0.7123,
+     "voxels": 1329.0,
+     "kept_pct": 93.6575
+    },
+    "SLF": {
+     "fa": 0.4393,
+     "md": 0.7309,
+     "voxels": 2023.0,
+     "kept_pct": 85.0
+    }
+   },
+   "parts": {
+    "ATR_L": {
+     "fa": 0.4128,
+     "md": 0.6977,
+     "voxels": 765.0,
+     "kept_pct": 95.9849
+    },
+    "ATR_R": {
+     "fa": 0.3871,
+     "md": 0.7322,
+     "voxels": 564.0,
+     "kept_pct": 90.6752
+    },
+    "SLF_L": {
+     "fa": 0.4493,
+     "md": 0.7286,
+     "voxels": 1191.0,
+     "kept_pct": 82.9387
+    },
+    "SLF_R": {
+     "fa": 0.4251,
+     "md": 0.7341,
+     "voxels": 832.0,
+     "kept_pct": 88.1356
+    },
+    "SLF_temporal": {
+     "fa": 0.5081,
+     "md": 0.7586,
+     "voxels": 30.0,
+     "kept_pct": 100.0
+    }
+   },
+   "n_directions": 64.0,
+   "b_value": 1000.0,
+   "n_b0": 1.0,
+   "motion_mean_mm": 1.6983,
+   "motion_max_mm": 3.9749,
+   "reg_similarity": 0.7223,
+   "voxel_mm": "1.98 x 1.98 x 2",
+   "acq_as_expected": false,
+   "reg_ok": true
+  },
+  {
+   "id": "sub-10228",
+   "tracts": {
+    "ATR": {
+     "fa": 0.4006,
+     "md": 0.7212,
+     "voxels": 1399.0,
+     "kept_pct": 89.622
+    },
+    "SLF": {
+     "fa": 0.4387,
+     "md": 0.7465,
+     "voxels": 2073.0,
+     "kept_pct": 85.4141
+    }
+   },
+   "parts": {
+    "ATR_L": {
+     "fa": 0.4157,
+     "md": 0.7141,
+     "voxels": 718.0,
+     "kept_pct": 89.8623
+    },
+    "ATR_R": {
+     "fa": 0.3847,
+     "md": 0.7287,
+     "voxels": 681.0,
+     "kept_pct": 89.3701
+    },
+    "SLF_L": {
+     "fa": 0.43,
+     "md": 0.7519,
+     "voxels": 1123.0,
+     "kept_pct": 82.8782
+    },
+    "SLF_R": {
+     "fa": 0.449,
+     "md": 0.7401,
+     "voxels": 950.0,
+     "kept_pct": 88.6194
+    },
+    "SLF_temporal": {
+     "fa": 0.5295,
+     "md": 0.7294,
+     "voxels": 40.0,
+     "kept_pct": 100.0
+    }
+   },
+   "n_directions": 64.0,
+   "b_value": 1000.0,
+   "n_b0": 1.0,
+   "motion_mean_mm": 0.5407,
+   "motion_max_mm": 1.0748,
+   "reg_similarity": 0.7631,
+   "voxel_mm": "1.98 x 1.98 x 2",
+   "acq_as_expected": false,
+   "reg_ok": true
+  },
+  {
+   "id": "sub-10339",
+   "tracts": {
+    "ATR": {
+     "fa": 0.4139,
+     "md": 0.721,
+     "voxels": 1323.0,
+     "kept_pct": 92.0668
+    },
+    "SLF": {
+     "fa": 0.4414,
+     "md": 0.7349,
+     "voxels": 2222.0,
+     "kept_pct": 82.5409
+    }
+   },
+   "parts": {
+    "ATR_L": {
+     "fa": 0.4276,
+     "md": 0.7283,
+     "voxels": 676.0,
+     "kept_pct": 94.2817
+    },
+    "ATR_R": {
+     "fa": 0.3996,
+     "md": 0.7135,
+     "voxels": 647.0,
+     "kept_pct": 89.8611
+    },
+    "SLF_L": {
+     "fa": 0.4597,
+     "md": 0.7127,
+     "voxels": 1180.0,
+     "kept_pct": 78.6667
+    },
+    "SLF_R": {
+     "fa": 0.4207,
+     "md": 0.76,
+     "voxels": 1042.0,
+     "kept_pct": 87.4161
+    },
+    "SLF_temporal": {
+     "fa": 0.569,
+     "md": 0.689,
+     "voxels": 27.0,
+     "kept_pct": 100.0
+    }
+   },
+   "n_directions": 64.0,
+   "b_value": 1000.0,
+   "n_b0": 1.0,
+   "motion_mean_mm": 0.486,
+   "motion_max_mm": 0.9923,
+   "reg_similarity": 0.803,
+   "voxel_mm": "1.98 x 1.98 x 2",
+   "acq_as_expected": false,
+   "reg_ok": true
+  }
+ ]
+}

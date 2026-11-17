@@ -10,7 +10,7 @@
     "test": "node --test tests/geometry.test.mjs tests/report.test.mjs",
     "check-public": "node scripts/check-public.mjs",
     "predeploy": "npm run check-public && npm run build",
-    "deploy": "gh-pages -d dist --nojekyll --no-history -m \"rebuild the viewer site\""
+    "deploy": "node scripts/deploy.mjs"
   },
   "dependencies": {
     "@fontsource/ibm-plex-sans": "^5.1.0",
